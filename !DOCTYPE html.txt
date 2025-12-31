@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Nilai Mahasiswa</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f8f8f7;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .box {
+            background-color: #eae9bc;
+            padding: 20px;
+            width: 450px;
+            border-radius: 4px;
+            box-shadow: 0 0 4px rgba(235, 233, 233, 0.1);
+            text-align: left;
+        }
+
+        .box h2 {
+            text-align: center;
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .line {
+            border-top: 2px dashed #333;
+            margin: 10px 0;
+        }
+
+        label {
+            display: inline-block;
+            width: 140px;
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 200px;
+            padding: 5px;
+        }
+
+        .full {
+            width: 260px;
+        }
+
+        .btn {
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        button {
+            padding: 6px 18px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .note {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        #boxOutput {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- INPUT -->
+    <div class="box" id="boxInput">
+
+        <!-- GARIS ATAS JUDUL -->
+        <div class="line"></div>
+        <h2>DATA NILAI MAHASISWA</h2>
+        <!-- GARIS BAWAH JUDUL -->
+        <div class="line"></div>
+
+        <label>Masukan NIM :</label>
+        <input type="text" id="nim"><br>
+
+        <label>Nama Mahasiswa :</label>
+        <input type="text" id="nama" class="full"><br>
+
+        <label>Nilai UTS :</label>
+        <input type="number" id="uts"><br>
+
+        <label>Nilai UAS :</label>
+        <input type="number" id="uas"><br>
+
+        <label>Nilai Tugas :</label>
+        <input type="number" id="tugas"><br>
+
+        <div class="btn">
+            <button type="button" onclick="proses()">Proses</button>
+            <button type="button" onclick="resetForm()">Batal</button>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="note">
+            UTS : 30% | UAS : 40% | TUGAS : 30% <br>
+            85–100 : A, 70–84 : B, 60–69 : C, 40–59 : D, &lt; 40 : E
+        </div>
+    </div>
+
+    <!-- OUTPUT -->
+    <div class="box" id="boxOutput">
+
+        <!-- GARIS ATAS JUDUL -->
+        <div class="line"></div>
+        <h2>DATA NILAI MAHASISWA</h2>
+        <!-- GARIS BAWAH JUDUL -->
+        <div class="line"></div>
+
+        <p><b>NIM :</b> <span id="oNim"></span></p>
+        <p><b>Nama Mahasiswa :</b> <span id="oNama"></span></p>
+        <p><b>Nilai UTS :</b> <span id="oUts"></span></p>
+        <p><b>Nilai UAS :</b> <span id="oUas"></span></p>
+        <p><b>Nilai Tugas :</b> <span id="oTugas"></span></p>
+        <p><b>Index :</b> <span id="oIndex"></span></p>
+
+        <div class="line"></div>
+
+        <div class="btn">
+            <button type="button" onclick="resetForm()">Kembali</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+function proses() {
+    let nim = document.getElementById("nim").value;
+    let nama = document.getElementById("nama").value;
+    let uts = parseFloat(document.getElementById("uts").value);
+    let uas = parseFloat(document.getElementById("uas").value);
+    let tugas = parseFloat(document.getElementById("tugas").value);
+
+    if (!nim || !nama || isNaN(uts) || isNaN(uas) || isNaN(tugas)) {
+        alert("Semua data harus diisi!");
+        return;
+    }
+
+    let nilaiAkhir = (uts * 0.3) + (uas * 0.4) + (tugas * 0.3);
+    let index = "";
+
+    if (nilaiAkhir >= 85) index = "A";
+    else if (nilaiAkhir >= 70) index = "B";
+    else if (nilaiAkhir >= 60) index = "C";
+    else if (nilaiAkhir >= 40) index = "D";
+    else index = "E";
+
+    document.getElementById("oNim").innerText = nim;
+    document.getElementById("oNama").innerText = nama;
+    document.getElementById("oUts").innerText = uts;
+    document.getElementById("oUas").innerText = uas;
+    document.getElementById("oTugas").innerText = tugas;
+    document.getElementById("oIndex").innerText = index;
+
+    document.getElementById("boxInput").style.display = "none";
+    document.getElementById("boxOutput").style.display = "block";
+}
+
+function resetForm() {
+    document.querySelectorAll("input").forEach(i => i.value = "");
+    document.querySelectorAll("span").forEach(s => s.innerText = "");
+
+    document.getElementById("boxOutput").style.display = "none";
+    document.getElementById("boxInput").style.display = "block";
+}
+</script>
+
+</body>
+</html>
